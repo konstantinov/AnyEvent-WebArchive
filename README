@@ -1,0 +1,28 @@
+NAME
+    AnyEvent::WebArchive - simple non-blocking WebArchive client
+
+VERSION
+    0.01
+
+SYNOPSIS
+       use AnyEvent::WebArchive;
+       
+       my $c = AnyEvent->condvar;
+       restore_url('cpan.org', sub { $c->send });
+       $c->recv;
+
+METHODS
+    restore_url $url, $callback
+        Restore all data from WebArchive cache for $url
+
+SUPPORT
+    *   Repository
+
+        <http://github.com/konstantinov/AnyEvent-WebArchive>
+
+COPYRIGHT & LICENSE
+    Copyright 2009 Dmitry Konstantinov. All right reserved.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
