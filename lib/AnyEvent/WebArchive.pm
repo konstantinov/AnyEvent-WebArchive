@@ -1,21 +1,23 @@
 package AnyEvent::WebArchive;
 
+use strict;
 use AnyEvent::HTTP;
 use Data::Dumper;
 use base 'Exporter';
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 our @EXPORT = qw(restore_url);
 my $DEBUG = 0;
 sub restore_url {
 	my $url = shift;
-	my $cb  = shift;
+	my $cb  = pop;
+	
 	$url =~ s/^www\.//;
 	my $opt = ref $_[0] ? $_[0] : {@_};
 	
 	$AnyEvent::HTTP::USERAGENT      = $opt->{'user_agent'} || 'Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.5.24 Version/10.52';
-	$AnyEvent::HTTP::MAX_PER_HOST ||= $opr->{'max_per_host'};
-	$AnyEvent::HTTP::ACTIVE       ||= $opr->{'active'      };
+	$AnyEvent::HTTP::MAX_PER_HOST ||= $opt->{'max_per_host'};
+	$AnyEvent::HTTP::ACTIVE       ||= $opt->{'active'      };
 	
 	my $count;
 	my $worker = {};
@@ -108,7 +110,7 @@ AnyEvent::WebArchive - simple non-blocking WebArchive client
 
 =head1 VERSION
 
-0.01
+0.02
 
 =head1 SYNOPSIS
 
@@ -122,9 +124,21 @@ AnyEvent::WebArchive - simple non-blocking WebArchive client
 
 =over 4
 
-=item restore_url $url, $callback
+=item restore_url $url, option => value, ..., $callback
 
 Restore all data from WebArchive cache for C<$url>
+
+=back
+
+=head1 OPTIONS
+
+=over 4
+
+=item user_agent - UserAgent string
+
+=item active - number of active connections for L<AnyEvent::HTTP>
+
+=item max_per_host - maximum connections per one host for L<AnyEvent::HTTP>
 
 =back
 
@@ -137,6 +151,10 @@ Restore all data from WebArchive cache for C<$url>
 L<http://github.com/konstantinov/AnyEvent-WebArchive>
 
 =back
+
+=head1 SEE ALSO
+
+L<AnyEvent>, L<AnyEvent::HTTP>
 
 =head1 COPYRIGHT & LICENSE
 
